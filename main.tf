@@ -34,7 +34,7 @@ resource "aws_launch_configuration" "Zane-lc" {
               sudo yum install httpd -y
               sudo service httpd start
               sudo chkconfig httpd on
-              aws s3 cp "${var.s3_bucket}" /var/www/html/ --recursive
+              echo "Hello World" > /var/www/html/index.html
               hostname -f >> /var/www/html/index.html
               EOF
 
