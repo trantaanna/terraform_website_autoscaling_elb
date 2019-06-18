@@ -26,7 +26,7 @@ resource "aws_launch_configuration" "Zane-lc" {
   key_name = "${var.key_name}"
   security_groups = ["${aws_security_group.Zane-lc-sg.id}"]
 
-  iam_instance_profile = "${var.iam_instance_profile}"
+  #iam_instance_profile = "${var.iam_instance_profile}"
 
   user_data = <<-EOF
               #!/bin/bash
@@ -97,7 +97,7 @@ resource "aws_elb" "Zane-elb" {
     timeout = 3
     interval = 30
     #target = "TCP:${var.server_port}"
-    target = "HTTP:${var.server_port}/index.html"
+    target = "HTTP:${var.server_port}/"
   }
 
   # This adds a listener for incoming HTTP requests.
@@ -120,13 +120,6 @@ resource "aws_security_group" "Zane-lc-sg" {
   ingress {
     from_port = "${var.server_port}"
     to_port = "${var.server_port}"
-    protocol = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = "${var.ssh_port}"
-    to_port = "${var.ssh_port}"
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
